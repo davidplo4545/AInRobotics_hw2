@@ -30,9 +30,12 @@ class RCSPlanner(object):
 
         # initialize an empty plan.
         plan = []
-        coarse_set = [(2,2), (2,0), (2,-2), (0,-2), (-2,-2), (-2,0), (-2, 2), (0,2)]
-        fine_set = [(1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1), (0,1)]
-        root = Node(self.planning_env.start, 0, is_coarse = False)
+        # coarse_set = [(2,2), (2,0), (2,-2), (0,-2), (-2,-2), (-2,0), (-2, 2), (0,2)]
+        # fine_set = [(1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1), (0,1)]
+
+        coarse_set = [(2,2), (2,0), (2,-2), (0,2), (0,0), (0,-2), (-2,2), (-2,0), (-2,-2)]
+        fine_set = [(1,1), (1,0), (1,-1), (0,1), (0,0), (0,-1), (-1,1), (-1,0), (-1,-1)]
+        root = Node(self.planning_env.start, 0, is_coarse = True)
         closed = []
         open = []
         open.append((root, root.rank))
