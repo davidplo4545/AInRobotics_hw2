@@ -13,6 +13,7 @@ class RRTPlanner(object):
         # set search params
         self.ext_mode = ext_mode
         self.goal_prob = goal_prob
+        self.run_time = None
 
     def plan(self):
         '''
@@ -68,6 +69,7 @@ class RRTPlanner(object):
         # print total path cost and time
         print('Total cost of path: {:.2f}'.format(self.compute_cost(plan)))
         print('Total time: {:.2f}'.format(time.time()-start_time))
+        self.run_time = time.time()-start_time
 
         return np.array(plan)
 

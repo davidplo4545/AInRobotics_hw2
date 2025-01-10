@@ -27,6 +27,45 @@ if __name__ == "__main__":
     else:
         raise ValueError('Unknown planner option: %s' % args.planner);
 
+
+
+    # path_costs = []
+    # run_times = []
+    # for i in range(10):
+    #     planning_env = MapEnvironment(json_file=args.map)
+    #     planner = RRTPlanner(planning_env=planning_env, ext_mode=args.ext_mode, goal_prob=args.goal_prob)
+    #     plan = planner.plan()
+    #     path_cost = planner.compute_cost(plan)
+    #     run_time = planner.run_time
+    #     path_costs.append(path_cost)
+    #     run_times.append(run_time)
+    #     print(f"Done iteration: {i}")
+    #     break
+    #     # Generate x-axis values: index + 1
+    # indices = range(1, 11)
+
+    # import matplotlib.pyplot as plt
+    # # Plot the data
+    # plt.plot(indices, path_costs, marker='o', linestyle='-')
+    # plt.xlabel('Run No.')
+    # plt.ylabel('Path Cost')
+    # plt.title(f'Path Cost For:{args.ext_mode} with Goal Probability:{args.goal_prob}')
+    # avg_path_costs = sum(path_costs) / float(len(path_costs))
+    # print(f"Average Path Costs is:{avg_path_costs}")
+    # plt.axhline(y=avg_path_costs, color='r', linestyle='--')
+    # plt.grid(True)
+    # plt.show()
+
+    # plt.plot(indices, run_times, marker='o', linestyle='-')
+    # plt.xlabel('Run No.')
+    # plt.ylabel('Run Time')
+    # plt.title(f'Runtime For:{args.ext_mode} with Goal Probability:{args.goal_prob}')
+    # avg_runtime = sum(run_times) / float(len(run_times))
+    # plt.axhline(y=avg_runtime, color='r', linestyle='--')
+    # print(f"Average run time is:{avg_runtime}")
+    # plt.grid(True)
+    # plt.show()
+
     # execute plan
     plan = planner.plan()
 
