@@ -25,60 +25,6 @@ class RCSPlanner(object):
         self.expanded_nodes = [] 
 
 
-    # def plan(self):
-    #     '''
-    #     Compute and return the plan. The function should return a numpy array containing the states (positions) of the robot.
-    #     '''
-
-    #     # initialize an empty plan.
-    #     plan = []
-    #     # coarse_set = [(2,2), (2,0), (2,-2), (0,-2), (-2,-2), (-2,0), (-2, 2), (0, 2)]
-    #     # fine_set = [(1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1), (0,1)]
-
-    #     coarse_set = [(-2,-2), (-2,0), (-2,2), (0,-2), (0,2), (2,-2), (2, 0), (2,2)]
-    #     fine_set = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
-    #     # coarse_set = {(2,2), (2,0), (2,-2), (0,2), (0,-2), (-2,2), (-2,0), (-2,-2)}
-    #     # fine_set = {(1,1), (1,0), (1,-1), (0,1), (0,-1), (-1,1), (-1,0), (-1,-1)}
-    #     root = Node(self.planning_env.start, 0, is_coarse = True)
-    #     closed = []
-    #     open = []
-    #     open.append((root, root.rank))
-    #     while open:
-    #         curr_node, _ =  min(open, key=lambda x: x[1])
-    #         curr_state = tuple(curr_node.state)
-    #         open.remove((curr_node, curr_node.rank))
-    #         if curr_state[0] == self.planning_env.goal[0] and curr_state[1] == self.planning_env.goal[1]:
-    #             plan = self.reconstruct_path(curr_node)
-    #             return plan
-    #         if not self.planning_env.state_validity_checker(curr_state):
-    #             continue
-    #         if curr_node in closed:
-    #             continue
-    #         for action in coarse_set:
-    #             new_state = np.array([curr_state[0] + action[0],
-    #                                     curr_state[1] + action[1]])
-    #             if self.planning_env.edge_validity_checker(curr_state, new_state):
-    #                 new_node = Node(new_state, curr_node.rank + 1, is_coarse=True, parent=curr_node)
-    #                 open.append((new_node, curr_node.rank + 1))
-    #             # else:
-    #                 # print(f"Can't be edge between coarse:{curr_state[0]},{curr_state[1]} to {new_state[0]},{new_state[1]}")
-
-    #         self.expanded_nodes.append(curr_state)
-    #         closed.append(curr_node)
-
-    #         if curr_state != tuple(self.planning_env.start) and curr_node.is_coarse:
-    #             parent_state = curr_node.parent.state
-    #             for action in fine_set:
-    #                 new_state = np.array([parent_state[0] + action[0],
-    #                     parent_state[1] + action[1]])
-    #                 if self.planning_env.edge_validity_checker(curr_state, new_state):
-    #                     new_node = Node(new_state, curr_node.rank + 1, is_coarse=False, parent=curr_node.parent)
-    #                     open.append((new_node, curr_node.rank + 1))
-    #                 # else:
-    #                     # print(f"Can't be edge between fine:{curr_state[0]},{curr_state[1]} to {new_state[0]},{new_state[1]}")
-
-    #     return np.array(plan)
-
     def plan(self):
         '''
         Compute and return the plan. The function should return a numpy array containing the states (positions) of the robot.
@@ -91,9 +37,11 @@ class RCSPlanner(object):
         # coarse_set = [(2,2), (2,0), (2,-2), (0,-2), (-2,-2), (-2,0), (-2, 2), (0, 2)]
         # fine_set = [(1,1), (1,0), (1,-1), (0,-1), (-1,-1), (-1,0), (-1,1), (0,1)]
 
+        coarse_set = np.array([[0, 2], [-2, 2], [-2, 0], [-2, -2], [0, -2], [2, -2], [2, 0], [2, 2]])
+        fine_set = np.array([[0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1], [1, 0], [1, 1]])
         # Define coarse and fine movement sets
-        coarse_set = [(-2, -2), (-2, 0), (-2, 2), (0, -2), (0, 2), (2, -2), (2, 0), (2, 2)]
-        fine_set = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+        # coarse_set = [(-2, -2), (-2, 0), (-2, 2), (0, -2), (0, 2), (2, -2), (2, 0), (2, 2)]
+        # fine_set = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
         # Initialize the root node
         root = Node(self.planning_env.start, rank=0, is_coarse=True)
@@ -165,7 +113,7 @@ class RCSPlanner(object):
         print(f"Total Steps: {total_steps}.")
         print(f"Coarse Steps: {coarse_steps}, {coarse_steps / total_steps * 100:.2f}% of total steps.")
         print(f"Fine Steps: {fine_steps}, {fine_steps / total_steps * 100:.2f}% of total steps.")
-        print(f"Total Distance:{total_distance:.2f} units.")
+        print(f"Total Distance: {total_distance:.2f} units.")
         return np.array(path)
 
     def get_expanded_nodes(self):
